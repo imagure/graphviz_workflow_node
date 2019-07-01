@@ -1,0 +1,15 @@
+{
+  "name": "graph_visualization",
+  "version": "1.0.0",
+  "description": "Graph visualization using graphviz",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ricardo",
+  "license": "ISC",
+  "dependencies": {
+    "graphviz": "0.0.9",
+    "jake": "^8.1.1"
+  }
+}
