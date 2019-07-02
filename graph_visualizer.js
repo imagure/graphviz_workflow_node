@@ -1,3 +1,5 @@
+// run 'npm install graphviz'
+
 const util = require('util'),
 graphviz = require('graphviz');
 
@@ -7,20 +9,24 @@ class GraphVisualizer{
 	print_from_json(json_blueprint, 
 					output_name="output",
 					output_format="png") {
-
-		this.data = require('./' + json_blueprint + '.json')
 		
+		this.data = json_blueprint
+
 		this.set_graph();
 		const node1 = this.set_nodes();
-		this.set_edges(node1)
+		this.set_edges(node1);
 
-		console.log(this.g.to_dot())
+		const dot = this.g.to_dot()
+		
+		//console.log(dot);
 		this.g.output(output_format, output_name + ".png" );
+
+		return output_name
 	}	
 
 	set_graph() {
 		this.g = graphviz.digraph("G");
-		this.g.set("rankdir", "LR")	
+		this.g.set("rankdir", "LR");
 	}
 
 	set_nodes() {
@@ -28,7 +34,7 @@ class GraphVisualizer{
 		for (var node of this.data.nodes) {
 			const label = node.type + '\n id: ' + node.id.toString();
 			const style = this.get_shape(node);
-			const node_id = node.id.toString()
+			const node_id = node.id.toString();
 			gv_node = this.g.addNode( 
 								node_id,
 	 						{
@@ -43,18 +49,26 @@ class GraphVisualizer{
 
 	get_shape(node) {
 		if (node.type =="Start") {
-			return {"style": "filled", "shape": "circle", "color": "lightsalmon"}
+			return {"style": "filled", 
+					"shape": "circle", 
+					"color": "lightsalmon"}
 		}
 
 		else if (node.type=="Finish") {
-			return {"style": "bold, filled", "shape": "doublecircle", "color": "indianred1"}
+			return {"style": "bold, filled", 
+					"shape": "doublecircle", 
+					"color": "indianred1"}
 		}
 		
 		else if (node.type=="IdentityUserTask") {
-			return {"style": "rounded, filled", "shape": "box", "color": "goldenrod"}
+			return {"style": "rounded, filled", 
+					"shape": "box", 
+					"color": "goldenrod"}
 		}
 
-		return {"style": "rounded, filled", "shape": "box", "color": "gold"}
+		return {"style": "rounded, filled", 
+				"shape": "box", 
+				"color": "gold"}
 
 	}
 
